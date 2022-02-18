@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+   <center>
+      <AnchorPane prefHeight="600.0" prefWidth="314.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="600.0" prefWidth="317.0" styleClass="background" stylesheets="@../css/login.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <right>
+      <AnchorPane prefHeight="350.0" prefWidth="299.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane layoutX="44.0" prefHeight="600.0" prefWidth="351.0" style="-fx-background-color: FA6C04;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <AnchorPane layoutX="123.0" layoutY="20.0" prefHeight="100.0" prefWidth="150.0" styleClass="fas-fa-lock" stylesheets="@../css/login.css" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="20.0" />
+                  <AnchorPane layoutX="75.0" layoutY="120.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.39999999999998" AnchorPane.topAnchor="120.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="-6.0" prefHeight="40.0" prefWidth="206.0" text="Selamat Datang">
+                           <font>
+                              <Font name="Comic Sans MS" size="28.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="76.0" layoutY="275.0" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" text="Username :">
+                           <font>
+                              <Font name="Comic Sans MS" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="76.0" layoutY="360.0" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="UsernameField" prefHeight="40.0" prefWidth="200.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="75.0" layoutY="435.0" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" text="Password :">
+                           <font>
+                              <Font name="Comic Sans MS" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="76.0" layoutY="509.0" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <PasswordField fx:id="PasswordField" prefHeight="40.0" prefWidth="200.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="100.0" layoutY="643.0" prefHeight="30.0" prefWidth="150.0">
+                     <children>
+                        <Button fx:id="Login" mnemonicParsing="false" onAction="#userLogin" prefHeight="30.0" prefWidth="150.0" text="Login">
+                           <font>
+                              <Font name="Comic Sans MS" size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="75.0" layoutY="160.0" prefHeight="40.0" prefWidth="200.0" />
+                  <AnchorPane layoutX="15.0" layoutY="237.0" prefHeight="31.0" prefWidth="320.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="16.0">
+                     <children>
+                        <Label fx:id="AlertText" alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="28.0" prefWidth="265.0" textFill="RED" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0">
+                           <font>
+                              <Font name="Comic Sans MS" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <Label alignment="CENTER" layoutX="76.0" layoutY="200.0" prefHeight="40.0" prefWidth="200.0" text="Silakan Login">
+                     <font>
+                        <Font name="Comic Sans MS" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

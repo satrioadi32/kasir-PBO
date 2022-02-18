@@ -1,0 +1,22 @@
+.logo {
+    -fx-background-image: url("../image/logo2.jpeg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+}
+
+.button {
+    -fx-background-color: white;
+}
+
+.button:hover {
+    -fx-background-color: FA6C04;
+}
+
+.logout {
+    -fx-background-color: FF3C08;
+}
+
+.logout:hover {
+    -fx-background-color: FF0505;
+}
