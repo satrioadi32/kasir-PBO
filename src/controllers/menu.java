@@ -15,15 +15,15 @@ import javafx.scene.control.Button;
  */
 public class menu {
     private SimpleStringProperty menu;
-    private SimpleIntegerProperty harga;
-    private SimpleIntegerProperty jumlah;
-    private SimpleIntegerProperty sisa;
+    private SimpleStringProperty harga;
+    private SimpleStringProperty jumlah;
+    private SimpleStringProperty sisa;
     
-public menu(String Menu, int Harga, int Jumlah, int Sisa){
+public menu(String Menu, String Harga, String Jumlah, String Sisa){
     this.menu = new SimpleStringProperty(Menu);
-    this.harga = new SimpleIntegerProperty(Harga);
-    this.jumlah = new SimpleIntegerProperty(Jumlah);
-    this.sisa = new SimpleIntegerProperty(Sisa);
+    this.harga = new SimpleStringProperty(Harga);
+    this.jumlah = new SimpleStringProperty(Jumlah);
+    this.sisa = new SimpleStringProperty(Sisa);
     }
 
 public String getMenu(){
@@ -34,28 +34,28 @@ public String getMenu(){
         this.menu = new SimpleStringProperty(Menu);
     }
     
-    public double getHarga(){
+    public String getHarga(){
         return harga.get();
     }
     
-    public void setHarga(int Harga){
-        this.harga = new SimpleIntegerProperty(Harga);
+    public void setHarga(String Harga){
+        this.harga = new SimpleStringProperty(Harga);
     }
     
-    public int getJumlah(){
+    public String getJumlah(){
         return jumlah.get();
     }
     
-    public void setJumlah(int Jumlah){
-        this.jumlah = new SimpleIntegerProperty(Jumlah);
+    public void setJumlah(String Jumlah){
+        this.jumlah = new SimpleStringProperty(Jumlah);
     }
     
-    public int getSisa(){
+    public String getSisa(){
         return sisa.get();
     }
     
-    public void setSisa(int Sisa){
-        this.sisa = new SimpleIntegerProperty(Sisa);
+    public void setSisa(String Sisa){
+        this.sisa = new SimpleStringProperty(Sisa);
     }
     
 }

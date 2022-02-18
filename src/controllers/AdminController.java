@@ -84,16 +84,16 @@ public class AdminController implements Initializable {
     private TableView<menu> tblView;
     
     @FXML
-    private TableColumn<menu, Integer> colHarga;
+    private TableColumn<menu, String> colHarga;
 
     @FXML
-    private TableColumn<menu, Integer> colJumlah;
+    private TableColumn<menu, String> colJumlah;
 
     @FXML
     private TableColumn<menu, String> colMenu;
 
     @FXML
-    private TableColumn<menu, Integer> colSisa;
+    private TableColumn<menu, String> colSisa;
     
     @FXML
     private TableColumn<menu, Button> colAction;
@@ -128,7 +128,7 @@ public class AdminController implements Initializable {
     
     private ObservableList<menu> getMenu;
     
-    String data_menu;
+    String dataMenu;
         
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -160,9 +160,9 @@ public class AdminController implements Initializable {
             while(queryResult.next()){
                 this.getMenu.add(new menu(
                         queryResult.getString("menu"),
-                        queryResult.getInt("harga"),
-                        queryResult.getInt("jumlah"),
-                        queryResult.getInt("sisa")
+                        queryResult.getString("harga"),
+                        queryResult.getString("jumlah"),
+                        queryResult.getString("sisa")
                 ));
             }
             
@@ -172,10 +172,25 @@ public class AdminController implements Initializable {
             this.colSisa.setCellValueFactory(new PropertyValueFactory<>("sisa"));
             
             this.tblView.setItems(this.getMenu);
+            tblView.setOnMouseClicked(event->{
+                this.events();
+            });
         } catch (SQLException e){
             System.out.println("Gagal upload Data Menu !!" + e);
         }
             
+    }
+    
+    private void events(){
+        for(menu getData: tblView.getSelectionModel().getSelectedItems()){
+            for(int i=0;i<1;i++){
+                MenuField.setText(getData.getMenu());
+                HargaField.setText(getData.getHarga());
+                JumlahField.setText(getData.getJumlah());
+                SisaField.setText(getData.getSisa());
+                this.dataMenu = getData.getMenu();
+            }
+        }
     }
     
     @FXML
@@ -223,17 +238,20 @@ public class AdminController implements Initializable {
     
     @FXML
     private void updateData() throws SQLException{
-        
+        String Menu = MenuField.getText().trim();
+        String Harga = HargaField.getText().trim();
+        String Jumlah = JumlahField.getText().trim();
+        String Sisa = SisaField.getText().trim();
     }
     
     @FXML
     private void deleteData() throws SQLException{
+        String sql = "DELETE FROM tb_menu WHERE menu=" + this.dataMenu;
+        Connection connect = koneksi.getConnection();
         try {
-            String sql = "DELETE FROM tb_menu WHERE menu=" + this.data_menu;
-            java.sql.Connection conn = (Connection)koneksi.getConnection();
-            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-            pst.execute();
-            AlertMessage(0,"Data Berhasill Dihapus");
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.execute();
+            AlertMessage(0,"Data Berhasil Dihapus");
             this.connect();
         } catch(SQLException e){
                 System.out.print(e);
