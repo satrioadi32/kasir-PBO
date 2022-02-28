@@ -1,23 +1,15 @@
 package controllers;
 
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.DriverManager;
+import java.sql.*;
 
 public class koneksi {
-    static Connection conn=null;
+    private static Connection koneksi;
     
-    public static Connection getConnection(){
-        String url = "jdbc:mysql://localhost/db_kasir";
-        String user = "root";
-        String pass = "";
-        
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(url,user,pass);
-        } catch (Exception e){
-            e.printStackTrace();
+    public static Connection connectDB() throws SQLException{
+        if(koneksi == null){
+            com.mysql.jdbc.Driver driver = new com.mysql.jdbc.Driver();
+            koneksi = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/db_kasir","root","");
         }
-        return null;
+        return koneksi;
     }
 }

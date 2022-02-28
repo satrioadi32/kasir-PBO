@@ -5,58 +5,71 @@
  */
 package controllers;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.control.Button;
+import javafx.beans.property.StringProperty;
 
 /**
  *
  * @author Asus
  */
 public class menu {
-    private SimpleStringProperty menu;
-    private SimpleStringProperty harga;
-    private SimpleStringProperty jumlah;
-    private SimpleStringProperty sisa;
-    
-public menu(String Menu, String Harga, String Jumlah, String Sisa){
-    this.menu = new SimpleStringProperty(Menu);
-    this.harga = new SimpleStringProperty(Harga);
-    this.jumlah = new SimpleStringProperty(Jumlah);
-    this.sisa = new SimpleStringProperty(Sisa);
-    }
+   private final StringProperty Menu;
+   private final StringProperty Harga;
+   private final StringProperty Jumlah;
+   private final StringProperty Sisa;
 
-public String getMenu(){
-        return menu.get();
+   
+   public menu(String Menu, String Harga, String Jumlah, String Sisa){
+       this.Menu = new SimpleStringProperty(Menu);
+       this.Harga = new SimpleStringProperty(Harga);
+       this.Jumlah = new SimpleStringProperty(Jumlah);
+       this.Sisa = new SimpleStringProperty(Sisa);
+   }
+
+    public String getMenu(){
+        return Menu.get();
+    }
+    public StringProperty menuProperty() {
+        return Menu;
+    }
+    public void setMenu(String menu){
+        this.Menu.set(menu);
     }
     
-    public void setMenu(String Menu){
-        this.menu = new SimpleStringProperty(Menu);
-    }
+    
     
     public String getHarga(){
-        return harga.get();
+        return Harga.get();
+    }
+    public StringProperty hargaProperty() {
+        return Harga;
+    }
+    public void setHarga(String harga){
+        this.Harga.set(harga);
     }
     
-    public void setHarga(String Harga){
-        this.harga = new SimpleStringProperty(Harga);
-    }
+    
     
     public String getJumlah(){
-        return jumlah.get();
+        return Jumlah.get();
+    }
+    public StringProperty jumlahProperty() {
+        return Jumlah;
+    }
+    public void setJumlah(String jumlah){
+        this.Harga.set(jumlah);
     }
     
-    public void setJumlah(String Jumlah){
-        this.jumlah = new SimpleStringProperty(Jumlah);
-    }
+    
     
     public String getSisa(){
-        return sisa.get();
+        return Sisa.get();
     }
-    
-    public void setSisa(String Sisa){
-        this.sisa = new SimpleStringProperty(Sisa);
+    public StringProperty sisaProperty() {
+        return Sisa;
+    }
+    public void setSisa(String sisa){
+        this.Sisa.set(sisa);
     }
     
 }
-

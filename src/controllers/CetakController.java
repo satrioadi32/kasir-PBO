@@ -22,13 +22,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -36,32 +33,10 @@ import javafx.stage.Stage;
  *
  * @author Asus
  */
-public class UserController implements Initializable {
+public class CetakController implements Initializable {
     
     @FXML
-    private TextField HargaField;
-
-    @FXML
-    private TextField JumlahField;
-
-    @FXML
-    private TextField MenuField;
-
-    @FXML
-    private TextField SisaField;
-
- 
-    @FXML
     private Label Status;
-
-    @FXML
-    private Button btnDesserts;
-
-    @FXML
-    private Button btnMakanan;
-
-    @FXML
-    private Button btnMinuman;
 
     @FXML
     private TableColumn<menu, String> colHarga;
@@ -76,42 +51,13 @@ public class UserController implements Initializable {
     private TableColumn<menu, String> colSisa;
 
     @FXML
-    private Label miniStatus;
+    private TableView<menu> tblView;
 
-    @FXML
-    private TableView<menu> tblView;    
-    
     private Connection conn;
     private Statement state;
     private ResultSet queryResult;
     
     private ObservableList<menu> getDataMenu;
-    
-    String getData;
-    
-    @FXML
-    public void btnLoginAdmin(ActionEvent event) throws IOException{
-       Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
-       Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-       Scene scene = new Scene(root);
-       stage.setScene(scene);
-       stage.setFullScreen(true);
-       stage.show();
-    }
-    
-    @FXML
-    private void handleClicks(ActionEvent event){
-        if(event.getSource() == btnMakanan){
-            Status.setText("Pilih Makananmu");
-            miniStatus.setText("/beranda/menu makanan");
-        } else if(event.getSource() == btnMinuman) {
-            Status.setText("Pilih Minumanmu");
-            miniStatus.setText("/beranda/menu minuman");
-        } else if(event.getSource() == btnDesserts) {
-            Status.setText("Pilih Dessertmu");
-            miniStatus.setText("/beranda/menu dessert");
-        }
-    }
     
     public void tampilData(){
       try {
@@ -142,44 +88,14 @@ public class UserController implements Initializable {
     }
     
     @FXML
-    private void pilihData(MouseEvent event) throws SQLException{
-        try {
-            menu selectedItem = tblView.getSelectionModel().getSelectedItem();
-            String sql = "SELECT * FROM tb_menu";
-            queryResult = state.executeQuery(sql);
-
-            this.MenuField.setText(selectedItem.getMenu());
-            this.HargaField.setText(selectedItem.getHarga());
-            this.JumlahField.setText(selectedItem.getJumlah());
-            
-            this.getData = selectedItem.getMenu();
-            
-            
-        } catch (SQLException e){
-            System.out.println(e);
-        }
-        
+    private void btnKembali(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/views/user.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        //stage.setFullScreen(true);
+        stage.show();
     }
-    
-    @FXML
-    private void tambahMenu(){
-        String menu = MenuField.getText().trim();
-        String harga = HargaField.getText().trim();
-        String jumlah = JumlahField.getText().trim();
-        String sisa = SisaField.getText().trim();
-    }
-    
-    @FXML
-    private void btnCetakStruk(ActionEvent event) throws IOException{
-       Parent root = FXMLLoader.load(getClass().getResource("/views/cetak.fxml"));
-       Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-       Scene scene = new Scene(root);
-       stage.setScene(scene);
-       stage.setFullScreen(true);
-       stage.show();
-    }
-    
-    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -198,6 +114,6 @@ public class UserController implements Initializable {
           System.out.println("Error : " + e2);
       }
     }    
-    
+        
     
 }

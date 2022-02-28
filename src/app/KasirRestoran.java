@@ -5,7 +5,6 @@
  */
 package app;
 
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,11 +19,11 @@ public class KasirRestoran extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/views/admin.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/user.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Program Kasir");
         stage.setScene(scene);
-        //stage.setFullScreen(true);
+        stage.setFullScreen(true);
         stage.show();
     }
     /**

@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Asus/OneDrive/Documents/NetBeansProjects/KasirRestoran/src/views/cetak.fxml</file>
             <file>file:/C:/Users/Asus/OneDrive/Documents/NetBeansProjects/KasirRestoran/src/app/KasirRestoran.java</file>
             <file>file:/C:/Users/Asus/OneDrive/Documents/NetBeansProjects/KasirRestoran/src/controllers/menu.java</file>
-            <file>file:/C:/Users/Asus/OneDrive/Documents/NetBeansProjects/KasirRestoran/src/app/FXMLDocumentController.java</file>
-            <file>file:/C:/Users/Asus/OneDrive/Documents/NetBeansProjects/KasirRestoran/src/controllers/koneksi.java</file>
+            <file>file:/C:/Users/Asus/OneDrive/Documents/NetBeansProjects/KasirRestoran/src/controllers/CetakController.java</file>
             <file>file:/C:/Users/Asus/OneDrive/Documents/NetBeansProjects/KasirRestoran/src/controllers/AdminController.java</file>
             <file>file:/C:/Users/Asus/OneDrive/Documents/NetBeansProjects/KasirRestoran/src/controllers/UserController.java</file>
             <file>file:/C:/Users/Asus/OneDrive/Documents/NetBeansProjects/KasirRestoran/src/controllers/LoginController.java</file>
+            <file>file:/C:/Users/Asus/OneDrive/Documents/NetBeansProjects/KasirRestoran/src/views/user.fxml</file>
         </group>
     </open-files>
 </project-private>

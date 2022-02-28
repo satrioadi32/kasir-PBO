@@ -5,23 +5,15 @@
  */
 package controllers;
 
-import app.KasirRestoran;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import static javafx.collections.FXCollections.observableList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,6 +30,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -45,28 +38,8 @@ import javafx.stage.Stage;
  *
  * @author Asus
  */
-public class AdminController implements Initializable {   
-    @FXML
-    private Label Status;
-    
-    @FXML
-    private Label miniStatus;
-    
-    @FXML
-    private Button btnDesserts;
+public class AdminController implements Initializable {  
 
-    @FXML
-    private Button btnMakanan;
-
-    @FXML
-    private Button btnMinuman;
-    
-    @FXML
-    private Button btnUpdate;
-    
-    @FXML
-    private Button btnDelete;
-    
     @FXML
     private TextField HargaField;
 
@@ -79,10 +52,24 @@ public class AdminController implements Initializable {
     @FXML
     private TextField SisaField;
 
-    
     @FXML
-    private TableView<menu> tblView;
-    
+    private Label Status;
+
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private Button btnDesserts;
+
+    @FXML
+    private Button btnMakanan;
+
+    @FXML
+    private Button btnMinuman;
+
+    @FXML
+    private Button btnUpdate;
+
     @FXML
     private TableColumn<menu, String> colHarga;
 
@@ -94,9 +81,20 @@ public class AdminController implements Initializable {
 
     @FXML
     private TableColumn<menu, String> colSisa;
-    
+
     @FXML
-    private TableColumn<menu, Button> colAction;
+    private Label miniStatus;
+
+    @FXML
+    private TableView<menu> tblView;    
+    
+    private Connection conn;
+    private Statement state;
+    private ResultSet queryResult;
+    
+    private ObservableList<menu> getDataMenu;
+    
+    String getData;
     
     @FXML
     public void btnLogout(ActionEvent event) throws IOException{
@@ -104,7 +102,7 @@ public class AdminController implements Initializable {
     Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
     Scene scene = new Scene(root);
     stage.setScene(scene);
-    //stage.setFullScreen(true);
+    stage.setFullScreen(true);
     stage.show();
     }
     
@@ -122,139 +120,167 @@ public class AdminController implements Initializable {
         }
     }
     
-    private Connection conn;
-    private Statement state;
-    private ResultSet queryResult;
-    
-    private ObservableList<menu> getMenu;
-    
-    String dataMenu;
-        
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        final String OFFICE_URL = "jdbc:mysql://localhost/db_kasir";
-        final String USERNAME = "root";
-        final String PASSWORD = "";
-        
-        try {
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(OFFICE_URL, USERNAME, PASSWORD);
-            
-            connect();
-        } catch (ClassNotFoundException e1) {
-           System.out.println("Driver MySQL JDBC failed" + e1);
-        } catch (SQLException e2) {
-            System.out.println("Error :" + e2);
-        } 
-    }
-     
-    private void connect() throws SQLException{
-        try {
-            state = conn.createStatement();
-            String sql = "SELECT * FROM tb_menu";
-            ResultSet queryResult = state.executeQuery(sql);
-            
-            this.getMenu = FXCollections.observableArrayList();
-            
-            while(queryResult.next()){
-                this.getMenu.add(new menu(
-                        queryResult.getString("menu"),
-                        queryResult.getString("harga"),
-                        queryResult.getString("jumlah"),
-                        queryResult.getString("sisa")
-                ));
-            }
-            
-            this.colMenu.setCellValueFactory(new PropertyValueFactory<>("menu"));
-            this.colHarga.setCellValueFactory(new PropertyValueFactory<>("harga"));
-            this.colJumlah.setCellValueFactory(new PropertyValueFactory<>("jumlah"));
-            this.colSisa.setCellValueFactory(new PropertyValueFactory<>("sisa"));
-            
-            this.tblView.setItems(this.getMenu);
-            tblView.setOnMouseClicked(event->{
-                this.events();
-            });
-        } catch (SQLException e){
-            System.out.println("Gagal upload Data Menu !!" + e);
-        }
-            
-    }
-    
-    private void events(){
-        for(menu getData: tblView.getSelectionModel().getSelectedItems()){
-            for(int i=0;i<1;i++){
-                MenuField.setText(getData.getMenu());
-                HargaField.setText(getData.getHarga());
-                JumlahField.setText(getData.getJumlah());
-                SisaField.setText(getData.getSisa());
-                this.dataMenu = getData.getMenu();
-            }
-        }
+    public void tampilData(){
+      try {
+          state = conn.createStatement();
+          String sql = "SELECT * FROM tb_menu";
+          queryResult = state.executeQuery(sql);
+          this.getDataMenu = FXCollections.observableArrayList();
+          
+          while(queryResult.next()){
+              this.getDataMenu.add(new menu(
+              queryResult.getString("Menu"),
+              queryResult.getString("Harga"),
+              queryResult.getString("Jumlah"),
+              queryResult.getString("Sisa")
+              ));
+         
+          }
+          
+          this.colMenu.setCellValueFactory(new PropertyValueFactory<>("menu"));
+          this.colHarga.setCellValueFactory(new PropertyValueFactory<>("harga"));
+          this.colJumlah.setCellValueFactory(new PropertyValueFactory<>("jumlah"));
+          this.colSisa.setCellValueFactory(new PropertyValueFactory<>("sisa"));
+          
+          this.tblView.setItems(this.getDataMenu);
+      } catch (SQLException e){
+          System.out.println("Gagal Push Data Menu" + e);
+      }
     }
     
     @FXML
-    private void tambahData() throws SQLException{
+    private void pilihData(MouseEvent event) throws SQLException{
+        try {
+            menu selectedItem = tblView.getSelectionModel().getSelectedItem();
+            String sql = "SELECT * FROM tb_menu";
+            queryResult = state.executeQuery(sql);
+
+            this.MenuField.setText(selectedItem.getMenu());
+            this.HargaField.setText(selectedItem.getHarga());
+            this.JumlahField.setText(selectedItem.getJumlah());
+            this.SisaField.setText(selectedItem.getSisa());
+            
+            this.getData = selectedItem.getMenu();
+            
+            
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+        
+    }
+    
+    @FXML
+    private void tambahData(ActionEvent event) throws SQLException{
         String menu = MenuField.getText().trim();
         String harga = HargaField.getText().trim();
         String jumlah = JumlahField.getText().trim();
         String sisa = SisaField.getText().trim();
         
-        if(menu.equals("") || harga.equals("") || jumlah.equals("") || sisa.equals("")){
-            AlertMessage(1,"Data Harus Diisi");
+        if (menu.equals("") || harga.equals("") || jumlah.equals("") || sisa.equals("")){
+            AlertMessage(1, "Data Harus Diisi");
         } else {
             try {
-                String sqlSelect = "SELECT * FROM tb_menu WHERE menu= '" + menu + "' ";
-                queryResult = state.executeQuery(sqlSelect);
+                String pilihData = "SELECT * FROM tb_menu WHERE menu= '" + menu + "' ";
+                queryResult = state.executeQuery(pilihData);
                 int record = 0;
+                
                 while (queryResult.next()){
                     record++;
                 }
-                
                 if(record > 0){
                     AlertMessage(1,"Menu Sudah Tersedia");
                 } else {
-                    String sqlInsert = "INSERT INTO tb_menu VALUES('" + menu + "','" + harga + "','" + jumlah + "','" + sisa + "')";
+                    String insertData = "INSERT INTO tb_menu VALUES('"+ menu +"', '"+ harga +"', '"+ jumlah +"', '"+ sisa +"')";
                     state = conn.createStatement();
-                    int result = state.executeUpdate(sqlInsert);
+                    int result = state.executeUpdate(insertData);
                     
                     if(result > 0){
-                        AlertMessage(0,"Tambah Menu Berhasil");
-                        colMenu.setText("");
-                        colHarga.setText("");
-                        colJumlah.setText("");
-                        colSisa.setText("");
-                        tambahData();
+                        AlertMessage(0, "Tambah Data Menu Behasil");
+                        MenuField.setText("");
+                        HargaField.setText("");
+                        JumlahField.setText("");
+                        SisaField.setText("");
+                        
+                        tampilData();
                     }
                 }
                 
-                queryResult.close();
-                state.close();
-            } catch(SQLException e){
-                System.out.println("Gagal tambah data" + e);
+            } catch (SQLException e){
+                System.out.println("Gagal Simpan Data " + e);
             }
         }
     }
     
     @FXML
-    private void updateData() throws SQLException{
-        String Menu = MenuField.getText().trim();
-        String Harga = HargaField.getText().trim();
-        String Jumlah = JumlahField.getText().trim();
-        String Sisa = SisaField.getText().trim();
+    private void updateData(ActionEvent event) throws SQLException{
+        String menu = MenuField.getText().trim();
+        String harga = HargaField.getText().trim();
+        String jumlah = JumlahField.getText().trim();
+        String sisa = SisaField.getText().trim();
+        
+        try {
+            menu selectedItem = tblView.getSelectionModel().getSelectedItem();
+            String pilihData = "UPDATE tb_menu SET harga ='" + harga + "', jumlah ='" + jumlah + "', sisa ='" + sisa + "' WHERE menu = '" + this.getData + "'";
+            state.executeUpdate(pilihData);
+            
+            AlertMessage(0, "Data berhasil Di Update");
+            
+            MenuField.setText("");
+            HargaField.setText("");
+            JumlahField.setText("");
+            SisaField.setText("");
+            
+            tblView.getItems().clear();
+            tampilData();
+        } catch (SQLException e){
+            System.out.println(e);
+        }
     }
     
     @FXML
-    private void deleteData() throws SQLException{
-        String sql = "DELETE FROM tb_menu WHERE menu=" + this.dataMenu;
-        Connection connect = koneksi.getConnection();
+    private void deleteData(ActionEvent event) throws SQLException{
+       try {
+            menu selectedItem = tblView.getSelectionModel().getSelectedItem();
+            String sql = "DELETE  FROM tb_menu WHERE menu= '" + this.getData + "'";
+            state.executeUpdate(sql);
+            
+            AlertMessage(0, "Delete Data Berhasil");
+            
+            MenuField.setText("");
+            HargaField.setText("");
+            JumlahField.setText("");
+            SisaField.setText("");
+            
+            tblView.getItems().clear();
+            this.tampilData();
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+    
+    @FXML
+    private void refreshData(ActionEvent event) throws SQLException{
         try {
-            PreparedStatement ps = connect.prepareStatement(sql);
-            ps.execute();
-            AlertMessage(0,"Data Berhasil Dihapus");
-            this.connect();
-        } catch(SQLException e){
-                System.out.print(e);
+            this.getDataMenu.clear();
+            String pilihData = "SELECT * FROM tb_menu";
+            state = conn.createStatement();
+            queryResult = state.executeQuery(pilihData);
+            
+            if(queryResult.next()) {
+                this.getDataMenu.add(new menu(
+                        queryResult.getString("Menu"),
+                        queryResult.getString("Harga"),
+                        queryResult.getString("Jumlah"),
+                        queryResult.getString("Sisa")
+                ));
+                AlertMessage(0, "Data Berhasil Di Refresh");    
+            } else {
+                AlertMessage(1, "Data Tidak/Belum Tersedia");
+            }
+
+            this.tblView.setItems(getDataMenu);
+        } catch (SQLException e){
+            System.out.println("Gagal Refresh Data " + e);
         }
     }
     private void AlertMessage(int type, String message){
@@ -267,6 +293,24 @@ public class AdminController implements Initializable {
         alert.setTitle("Info");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+      final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+      final String OFFICE_URL = "jdbc:mysql://localhost:3306/db_kasir";
+      final String USERNAME = "root";
+      final String PASSWORD = "";
+      
+      try {
+          Class.forName(JDBC_DRIVER);
+          conn = DriverManager.getConnection(OFFICE_URL, USERNAME, PASSWORD);
+          tampilData();
+      } catch (ClassNotFoundException e1){
+          System.out.println("Driver MySQL JDBC gagal!!" + e1);
+      } catch(SQLException e2){
+          System.out.println("Error : " + e2);
+      }
     }
     
 }

@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            //stage.setFullScreen(true);
+            stage.setFullScreen(true);
             stage.show();
         } else if(UsernameField.getText().isEmpty() == false && PasswordField.getText().isEmpty() == false){
             AlertText.setText("Username/Password Tidak Terdaftar");
